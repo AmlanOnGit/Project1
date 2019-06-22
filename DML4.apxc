@@ -1,0 +1,30 @@
+public class DML4 {
+    public List<Account_Wrap> accounts   {set;get;}
+    public DML4(){
+        accounts=new List<Account_Wrap>();
+        List<Account> myList=[select Id,Name,Phone,Rating,Industry from Account];
+        for(Account a:myList){
+            Account_Wrap aw=new Account_Wrap();
+            aw.acc=a;
+            aw.flag=false;
+            accounts.add(aw);
+        }
+    }
+    public void deleteData(){
+        List<Account> myList=new List<Account>();
+        for(Account_Wrap aw:accounts){
+            if(aw.flag==true){
+                myList.add(aw.acc);
+            }
+        }
+        delete myList;
+        accounts.clear();
+        List<Account> accList=[select Id,Name,Phone,Rating,Industry from Account];
+        for(Account a:accList){
+            Account_Wrap aw=new Account_Wrap();
+            aw.acc=a;
+            aw.flag=false;
+            accounts.add(aw);
+        }
+    }
+}
